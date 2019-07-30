@@ -13,8 +13,7 @@
 using namespace std;
 
 
-//https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
-
+ //https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
  int lengthOfLongestSubstringKDistinct(string s, int k) {
 
 	if (s.size() == 0) return 0;
@@ -52,4 +51,11 @@ using namespace std;
 	}
 	return res;
 
+}
+
+void main() {
+
+	cout << lengthOfLongestSubstringKDistinct("abcabdeabcbbbbbad", 3) << endl;
+	cout << lengthOfLongestSubstringKDistinct("eceba", 2) << endl;
+	system("PAUSE");
 }
