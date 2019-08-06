@@ -12,6 +12,10 @@
 #include <queue>
 using namespace std;
 
+int getIndex(int i, vector<int>& nums) {
+	return ((i + nums[i]) % nums.size());
+}
+
 //https://leetcode.com/problems/circular-array-loop/
 bool circularArrayLoop(vector<int>& nums) {
 
