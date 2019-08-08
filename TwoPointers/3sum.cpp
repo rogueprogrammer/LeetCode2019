@@ -41,7 +41,7 @@ vector<vector<int>> threeSum(vector<int>& nums) {
                     sort(t.begin(), t.end());
                     res.push_back(t);
                     while (l + 1 < nums.size() && nums[l] == nums[l + 1]) ++l;
-				            while (r - 1 >= 0 && nums[r] == nums[r - 1]) --r;
+	            while (r - 1 >= 0 && nums[r] == nums[r - 1]) --r;
                     --r;
                     ++l;
                 }
