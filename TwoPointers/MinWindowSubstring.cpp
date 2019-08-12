@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 
-//https://leetcode.com/problems/minimum-window-substring/
-//passed 267/268 cases. last test case gives TLE on very long test case
+
 bool isSatisfied(string& cur, string& t, unordered_map<char, int> m) {
 	int len_unique_chars = m.size();
 	//check if all chars of cur have all chars of t
@@ -17,7 +16,8 @@ bool isSatisfied(string& cur, string& t, unordered_map<char, int> m) {
 	return counter == len_unique_chars;
 }
 
-
+//https://leetcode.com/problems/minimum-window-substring/
+//passed 267/268 cases. last test case gives TLE on very long test case
 //use two pointers/sliding window technique, L and R, and expand window if the current window is not satisfying
 //contract window if current window meets requirements. keep contracting until it no longer satisfies. 
 string minWindow(string s, string t) {
