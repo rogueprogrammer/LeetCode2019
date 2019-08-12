@@ -1,4 +1,4 @@
-
+#include <bits/stdc++.h>
 
 //https://leetcode.com/problems/minimum-window-substring/
 //passed 267/268 cases. last test case gives TLE on very long test case
@@ -40,4 +40,10 @@ string minWindow(string s, string t) {
 		else return "";
 	}
 	return best;
+}
+
+void main() {
+
+	cout << minWindow("ADOBECODEBANC", "ABC") << endl;
+	cout << minWindow("aa", "aa") << endl;
 }
