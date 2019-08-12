@@ -11,7 +11,6 @@ bool isSatisfied(string& cur, string& t, unordered_map<char, int> m) {
 		if (m[cur[i]] == 0) {
 			++counter;
 		}
-		//if (--m[cur[i]] == 0) ++counter;
 	}
 	return counter == len_unique_chars;
 }
