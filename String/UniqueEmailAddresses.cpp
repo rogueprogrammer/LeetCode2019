@@ -16,19 +16,15 @@ int numUniqueEmails(vector<string>& emails) {
             int atPosn = email.find('@');
             string hostname = email.substr(0, atPosn);
             hostname = removeChar(hostname, '.');
-            cout << hostname << endl;
             string domain = email.substr(atPosn+1, email.size()-atPosn+1);
-            cout << domain << endl;
             int posnPl = hostname.find('+');
             if(posnPl >= 0){
                 string newHostname= hostname.substr(0, posnPl);
                 hostname = newHostname;
-                cout << hostname << endl;
             }
             email = hostname;
             email += "@";
-            email += domain;
-            
+            email += domain;  
             auto it = ht.find(email);
             if(it == ht.end()){ //not in hashtable
                 ht.insert(email);
