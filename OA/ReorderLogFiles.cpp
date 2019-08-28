@@ -1,5 +1,6 @@
 //https://leetcode.com/problems/reorder-log-files/
 
+//return true if a < b and thus a should appear before b. false otherwise.
 bool customCompare(string a, string b) {
 
 	//check first char after space
