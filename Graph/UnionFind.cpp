@@ -40,7 +40,7 @@ int _find(int x){
 }
 
 //Combine x and y into one set making the parent of (parent of x)
-equal to the parent of y
+//equal to the parent of y
 void _union(int x, int y){
         int px = _find(x);
         int py = _find(y);
