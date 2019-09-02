@@ -17,7 +17,7 @@ tree formed so far.
    If cycle is not formed, include this edge. Else, discard it.
 3. Repeat step 2 until there are (v-1) edges in the spanning tree.
 
-CYCLE DETECTION - Union Find Algorithm
+CYCLE DETECTION IN UNDIRECTED GRAPH - Union Find Algorithm
 for each unvisited edge (u,v) in edge set E
 {
   if(Find(u) == Find(v)){
