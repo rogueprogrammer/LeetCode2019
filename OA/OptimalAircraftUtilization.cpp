@@ -6,8 +6,7 @@
 using namespace std;
 
 
-vector<pair<int, int>> optimalUtilization(int maxTravelDistance,
-vector<pair<int, int>> forwardRouteList, vector<pair<int, int>>
+vector<pair<int, int>> optimalUtilization(int maxTravelDistance, vector<pair<int, int>> forwardRouteList, vector<pair<int, int>>
         returnRouteList){
         //to do: implement sort function for forwardRouteList and
 returnRouteList to sort them in descending order to make runtime
@@ -61,14 +60,10 @@ O(nlogn)
 
 //https://leetcode.com/discuss/interview-question/318918/Amazon-or-Online-Assessment-2019-or-Optimal-Aircraft-Utilization
 int main() {
-
-
         int maxTravelDist = 7000;
         vector<pair<int, int>> forwardRouteList = { { 1, 2000 }, { 2, 4000 },
         { 3, 6000 } };
         vector<pair<int, int>> returnRouteList = { { 1, 2000 } };
-
-
         int maxTravelDist = 10000;
         vector<pair<int, int>> forwardRouteList = { { 1, 3000 }, { 2, 5000 },
         { 3, 7000 }, { 4, 10000 } };
@@ -79,3 +74,4 @@ int main() {
         for (pair<int, int> p : res){
                 cout << p.first << " , " << p.second << endl;
         }
+}
