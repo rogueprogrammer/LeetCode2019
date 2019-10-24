@@ -2,7 +2,9 @@
 
 //https://leetcode.com/problems/course-schedule/
 //this problem reduces down to finding a cycle in a directed graph.
-//we can use concept of indegrees combined with BFS to solve this problem
+//we can use concept of indegrees combined with BFS to solve this problem (Kahn's algorithm)
+//https://en.wikipedia.org/wiki/Topological_sorting#Algorithms
+//https://www.geeksforgeeks.org/topological-sorting-indegree-based-solution/
 bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 	if (prerequisites.size() == 0) return true;
 	//calculate indegree of each course.
