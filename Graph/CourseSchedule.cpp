@@ -1,6 +1,8 @@
 #include "header.h"
 
 //https://leetcode.com/problems/course-schedule/
+//this problem reduces down to finding a cycle in a directed graph.
+//we can use concept of indegrees combined with BFS to solve this problem
 bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
 	if (prerequisites.size() == 0) return true;
 	//calculate indegree of each course.
