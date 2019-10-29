@@ -1,4 +1,5 @@
 #include "header.h"
+//passed all test cases
 
 //https://leetcode.com/problems/course-schedule/
 //this problem reduces down to finding a cycle in a directed graph.
