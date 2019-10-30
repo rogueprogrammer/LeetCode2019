@@ -26,7 +26,6 @@
                 for(int n : neighbors){
                     if(coloring[n] == 0){ //not yet colored
                         q.push(n);
-                        //coloring[n] = curColor;
                         coloring[n] = neighColor;
                     }
                 }
