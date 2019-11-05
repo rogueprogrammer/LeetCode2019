@@ -2,16 +2,15 @@
 //https://leetcode.com/problems/campus-bikes/submissions/
 //passed all cases
 //Idea: use bucket sort to sort the manhattan distances. 
-    //Bucket sort is a good idea since we know any x or y is between 0 and 1000 inclusive,
-    // meaning that we have an upper bound of 2000 as the manhattan distance. 
+//Bucket sort is a good idea since we know any x or y is between 0 and 1000 inclusive,
+// meaning that we have an upper bound of 2000 as the manhattan distance. 
 //O(mn) bucket sort (m == number of workers, n == number of bikes)
 class Solution {
 public:
     int manhattanDistance(int p1x, int p1y, int p2x, int p2y){
         return abs(p1x-p2x) + abs(p1y - p2y);
     }
-    
-    
+        
     vector<int> assignBikes(vector<vector<int>>& workers, vector<vector<int>>& bikes) {
         int numWorkers = workers.size();
         int numBikes = bikes.size();
