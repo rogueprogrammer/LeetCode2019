@@ -12,7 +12,7 @@ public:
 	}
 
 	string get(string key, int timestamp) {
-		auto start = m.upper_bound(pair<string, int>(key, 0));
+		auto start = m.lower_bound(pair<string, int>(key, 0));
 		auto end = m.upper_bound(pair<string, int>(key, timestamp));
 		string res = "";
 		int ts = 0;
