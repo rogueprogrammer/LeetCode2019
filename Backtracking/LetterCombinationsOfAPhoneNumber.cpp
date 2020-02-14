@@ -31,8 +31,6 @@ vector<string> letterCombinations(string digits) {
 	if (digits == "") {
 		return res;
 	}
-    
-    
 	int posn = 0;
 	string soFar = "";
 	dfs(digits, posn, soFar, res);
