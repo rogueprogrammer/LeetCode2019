@@ -3,7 +3,7 @@
 //Algorithm:
 //let dp[i] == true if s[0, ..., i] can be formed by the dictionary
 // for each i:
-//     for each j = 0, ..., j
+//     for each j = 0, ..., i
 //           if dp[j]==true and s[j, ..., i] is in the dictionary, this means that s[0, ..., i] can be created by dictionary
 //                 dp[i] is true
 
