@@ -1,3 +1,5 @@
+//leetcode.com/problems/lru-cache/
+//100% test cases pass
 class LRUCache {
 public:
 	unordered_map<int, list<pair<int, int>>::iterator> m;
@@ -24,10 +26,8 @@ public:
 
 	void put(int key, int val) {
 		auto it = m.find(key);
-		if (it != m.end()) { //already in the cache
-			//it->second->second = val;
+		if (it != m.end()) { //already in the cache, move it to front of list and delete existing mappings
 			l.erase(it->second);
-			//move it to front of the list
 			m.erase(key);
 			pair<int, int> p = pair<int, int>(key, val);
 			l.push_front(p);
@@ -48,9 +48,16 @@ public:
 };
 
 
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache* obj = new LRUCache(capacity);
- * int param_1 = obj->get(key);
- * obj->put(key,value);
- */
+
+void main() {
+
+	int capacity = 2;
+	LRUCache* obj = new LRUCache(capacity);
+	obj->put(2, 1); 
+	obj->put(1,1);
+	obj->put(2, 3);
+	obj->put(4, 1);
+	obj->get(1);
+	obj->get(2);	
+	system("PAUSE");
+}
