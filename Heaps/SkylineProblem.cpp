@@ -60,6 +60,7 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 			maxHeight = max(maxHeight, curY); maxBuildingLp[0] = curX; maxBuildingLp[1] = curY;
 		}
 		if ((i == 0) || (curY == 0)) {
+			maxHeight = 0;
 			res.push_back(cur); continue;
 		}
 		else {
@@ -79,6 +80,9 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 			}
 		}
 	}
+	vector<int> lastPoint = buildings[buildings.size() - 1];
+	vector<int> lastLp = { lastPoint[1], 0 };
+	res.push_back(lastLp);
 	return res;
 }
 
@@ -89,8 +93,13 @@ void main() {
 
 	/*
 	Input           - [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
-    Output          - [[2,10],[3,15],[7,12],[12,0],       [20,8]]
+    Output          - [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24, 0]]
     Expected        - [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
+    
+I:    [[0,2,3],[2,5,3]]
+O:    [[0,3],[2,3],[5,0]]
+E:    [[0,3],[5,0]]
+    
 	*/
 	vector<vector<int>> buildings = {
 		{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}
