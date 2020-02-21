@@ -1,3 +1,5 @@
+#include "Header.h"
+
 bool doesCurBuildingandNextBuildingOverlap(int curLpx, int curRpx,  int nexLpx, int nexRpx)
 {
 	// if building1 is nested between building2 or if building2 is nested between building1
@@ -30,21 +32,21 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 	for (int i = 0; i < buildings.size(); ++i) {
 		vector<int> b = buildings[i];
 		int lx = b[0]; int rx = b[1]; int y = b[2];
+		// check if cur building doesn't collide with previous building
+		// if not, then add (prev building's RP x, 0) as a new LP
+		if (i > 0) {
+			vector<int> prevBuilding = buildings[i - 1];
+			int prevRpX = prevBuilding[1];
+			if (lx > prevRpX) {
+				vector<int> newLp = { prevRpX, 0 };
+				Lps.push_back(newLp);
+			}
+		}
 		vector<int> lp = { lx, y };
 		vector<int> rp = { rx, y };
 		m[lp] = rp;
 		Lps.push_back(lp); Rps.push_back(rp);
-		// check if next building overlaps with current building. if not, then add coordinate of (Cur_rx, 0)
-		// into Lps
-		if (i + 1 < Lps.size()) {
-			vector<int> nextLp = { buildings[i + 1][0], buildings[i + 1][2] };
-			vector<int> nextRp = { buildings[i + 1][1], buildings[i + 1][2] };
-			//this below clause doesn't work, need to debug why
-			if (!doesCurBuildingandNextBuildingOverlap(lx, rx, nextLp[0], nextRp[0])) {
-				vector<int> newCoord = { rx, 0 };
-				Lps.push_back(newCoord);
-			}
-		}
+		
 	}
 	cout << "Lps: " << endl;
 	DEBUG_2D(Lps);
@@ -54,7 +56,7 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 	vector<int> maxBuildingLp = { -1, -1 };
 	for (int i = 0; i < Lps.size(); ++i) {
 		vector<int> cur = Lps[i]; int curX = cur[0]; int curY = cur[1];
-		if (curY > maxHeight) {
+		if (curY > maxHeight) { 
 			maxHeight = max(maxHeight, curY); maxBuildingLp[0] = curX; maxBuildingLp[1] = curY;
 		}
 		if ((i == 0) || (curY == 0)) {
@@ -62,19 +64,41 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 		}
 		else {
 			vector<int> highestBuildingRP = m[maxBuildingLp];
-			if (curY == maxBuildingLp[1]) {
+			if (curY == maxBuildingLp[1]) { //if going upward trend
 				res.push_back(maxBuildingLp);
+				continue;
 			}
-			if (curY < maxHeight && curX > highestBuildingRP[0]) {
-				// if x of maxBuildingRP is greater than curX
-				// take intersection of RP of highest building and next LP
-				// => x of LP, y of next LP
-				if (i + 1 < Lps.size()) {
-					vector<int> intersection = { highestBuildingRP[0], Lps[i+1][1] };
-					res.push_back(intersection);
-				}
+			vector<int> curRp = m[cur];
+			vector<int> prev = Lps[i - 1];
+			vector<int> prevRp = m[prev];
+			if (prevRp.size() > 0 && curRp[0] > prevRp[0]) { //going downward and RP of cur building is greater than RP of previous building
+				int x = prevRp[0];
+				int y = curRp[1];
+				vector<int> newlpToAdd = { x, y };
+				res.push_back(newlpToAdd);
 			}
 		}
 	}
 	return res;
+}
+
+
+
+
+void main() {
+
+	/*
+	Input           - [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
+    Output          - [[2,10],[3,15],[7,12],[12,0],       [20,8]]
+    Expected        - [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
+	*/
+	vector<vector<int>> buildings = {
+		{2,9,10},{3,7,15},{5,12,12},{15,20,10},{19,24,8}
+		//{15,20,10},{19,24,8}
+	};
+	vector<vector<int>> res = getSkyline(buildings);
+	cout << "RES: " << endl;
+	DEBUG_2D(res);
+
+	system("PAUSE");
 }
