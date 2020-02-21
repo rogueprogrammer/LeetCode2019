@@ -1,18 +1,7 @@
 #include "Header.h"
 
-bool doesCurBuildingandNextBuildingOverlap(int curLpx, int curRpx,  int nexLpx, int nexRpx)
-{
-	// if building1 is nested between building2 or if building2 is nested between building1
-	if (curRpx >= nexLpx && curRpx <= nexRpx) {
-		return true;
-	}
-	else if (nexLpx >= curLpx && nexLpx <= curRpx) {
-		return true;
-	}
 
-	return false;
-}
-
+// create my own hash function to make [unordered_map<vector<int>, vector<int>>] work
 struct VectorHasher {
 	int operator()(const vector<int> &V) const {
 		int hash = 0;
@@ -85,9 +74,6 @@ vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
 	res.push_back(lastLp);
 	return res;
 }
-
-
-
 
 void main() {
 
