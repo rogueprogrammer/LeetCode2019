@@ -29,3 +29,33 @@ vector<int> productExceptSelf(vector<int>& nums) {
 	}
 	return res;
 }
+
+
+//Optimization, can do it with O(1) extra space:
+
+vector<int> productExceptSelfOptimized(vector<int>& nums) {
+	/*
+	Initialize res array with products left of element i. Start at very right, and continuously update right product and 
+	updating the res array based on right * left:
+	nums:  [1           2          3        4]
+	res:   [24           12           8        6]
+	right:  24            24            12        4
+	*/
+	vector<int> res(nums.size());
+	if (nums.size() == 0) return res;
+	for (int i = 0; i < nums.size(); ++i) {
+		//populate left
+		if (i == 0) {
+			res[i] = 1;
+		}
+		else {
+			res[i] = res[i - 1] * nums[i - 1];
+		}
+	}
+	int right = nums[nums.size() - 1];
+	for (int i = nums.size() - 2; i >= 0; --i) {
+		res[i] *= right;
+		right = right * nums[i];
+	}
+	return res;
+}
