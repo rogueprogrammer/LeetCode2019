@@ -25,7 +25,8 @@ public:
     1,2, 3        2,3,4      3,4,3        4,null,1
     cur
     While iterating through the linked list, you can't just copy the node's next and random 
-    pointers, since the addrsses are of the inputted linked list. So create a hashtable of original list nodes to copied list nodes, and copy the corresponding node, after making a copy of all the original nodes.
+    pointers, since the addrsses are of the inputted linked list. So create a hashtable of original list nodes to copied list nodes, 
+    and copy the corresponding node, after making a copy of all the original nodes.
     */
     unordered_map<Node*, Node*> ht;
     Node* cur = head;
