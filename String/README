@@ -1,0 +1,9 @@
+Parse string upto a delimiter 
+stringstream ss(inputtedString);
+getline(ss, outputString, ' '); //parse upto ' ' from inputtedString
+
+Find character in string:
+.find('
+
+String to INT - stoi
+
