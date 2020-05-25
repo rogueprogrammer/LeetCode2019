@@ -1,5 +1,27 @@
 
 //https://leetcode.com/problems/rotting-oranges/
+/*
+   0 - empty, 1 - fresh, 1 - rotten
+
+   min=0
+   0    1    2
+   1    1    1
+   2    1    0
+
+   min=1
+   0    2    2
+   1    1    2
+   2    2    0
+
+   min=2
+   0    2    2
+   2    2    2
+   2    2    0
+Find all rotten oranges add them to queue, do BFS to find each adjacent orange that is not rotten, then make it rotten, add it to queue,
+and continue BFS until no more oranges. Since the contamination happens layer by layer, a BFS like traversal can find the shortest 
+amount of time until all oranges are contaminated. Runtime = O(N), since we first iterate through entire grid, then we run BFS on the
+grid, which would be at most N oranges added.
+   */
 
 int orangesRotting(vector<vector<int>>& grid) {
 	int minutes = 0;
