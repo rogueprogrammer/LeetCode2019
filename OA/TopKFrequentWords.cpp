@@ -1,7 +1,7 @@
 // https://leetcode.com/problems/top-k-frequent-words/
 //   a node can be (word, numTimes)
 //   create a min heap of size k
-
+// O(nlogk) algorithm
 struct minHeapComparator {
 	bool operator()(const pair<string, int>& a, const pair<string, int>& b) {
 		//if the words have same frequency, then sort the words with the one that comes lexographically first
