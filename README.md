@@ -3,11 +3,11 @@
 ******HEAPS:
 
 struct comparator {
+
 	bool operator()(const int& a, const int &b) {
 		return a < b;
 	}
 };
-
 void heaptest() {
 
 	vector<int> v = { 10, 11, 8, 7, 6 };
