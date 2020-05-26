@@ -14,17 +14,17 @@ vector<string> reorderLogFiles(vector<string>& logs) {
 	vector<string> digitLogs; //need to maintain order of digit logs
 	vector<string> res;
 
-    for (string s : logs) {
-        int i = 0;
-		int lastSpace = 0;
-		while (s[i] != ' ') { i++; lastSpace = i; }
-		if (isalpha(s[++i])) {
-			letterLogs.push_back(make_pair(s.substr(0, lastSpace), s.substr(i, s.size() - i +1)));
-		}
-		else {
-			digitLogs.push_back(s);
-		}
-    }
+	for (string s : logs) {
+		int i = 0;
+			int lastSpace = 0;
+			while (s[i] != ' ') { i++; lastSpace = i; }
+			if (isalpha(s[++i])) {
+				letterLogs.push_back(make_pair(s.substr(0, lastSpace), s.substr(i, s.size() - i +1)));
+			}
+			else {
+				digitLogs.push_back(s);
+			}
+	}
 	sort(letterLogs.begin(), letterLogs.end(),
 		[](pair<string, string> a, pair<string, string>b) {
 			if (a.second == b.second) {
