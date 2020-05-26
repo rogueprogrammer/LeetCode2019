@@ -1,63 +1,46 @@
 //https://leetcode.com/problems/reorder-log-files/
 
-//return true if a < b and thus a should appear before b. false otherwise.
-bool customCompare(string a, string b) {
+/*
+Input: logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
+Output: ["let1 art can","let3 art zero","let2 own kit dig","dig1 8 1 5 1","dig2 3 6"]
+O(NlogN) solution:
+        1. Split logs into letter-logs and digit logs
+	2. Sort all letter logs. If tie, then sort based on identifier (first word).
+	3. Concatenate letter logs and digit logs.
+*/
 
-	//check first char after space
-	int i = 0;
-	string a_identifier;
-	string b_identifier;
-	while (a[i] != ' ') {
-		++i;
-		a_identifier += a[i];
-	}
-	int j = 0;
-	while (b[j] != ' ') {
-		++j;
-		b_identifier += b[j];
-	}
+vector<string> reorderLogFiles(vector<string>& logs) {
+	vector<pair<string, string>> letterLogs; //<first word, rest of log>
+	vector<string> digitLogs; //need to maintain order of digit logs
+	vector<string> res;
 
-	if (isalpha(a[i + 1])) {
-		if (!isalpha(b[j + 1])) return true;
+    for (string s : logs) {
+        int i = 0;
+		int lastSpace = 0;
+		while (s[i] != ' ') { i++; lastSpace = i; }
+		if (isalpha(s[++i])) {
+			letterLogs.push_back(make_pair(s.substr(0, lastSpace), s.substr(i, s.size() - i +1)));
+		}
 		else {
-			string a_comb;
-			string b_comb;
-			for (int ii = i; ii < a.size(); ++ii) {
-				if (a[ii] != ' ') {
-					a_comb += a[ii];
-				}
+			digitLogs.push_back(s);
+		}
+    }
+	sort(letterLogs.begin(), letterLogs.end(),
+		[](pair<string, string> a, pair<string, string>b) {
+			if (a.second == b.second) {
+				return a.first < b.first;
 			}
-			for (int jj = j; jj < b.size(); ++jj) {
-				if (b[jj] != ' ') {
-					b_comb += b[jj];
-				}
-			}
+			return a.second < b.second;
+		}
+	);
 
-			if (a_comb > b_comb) {
-				return false;
-			}
-			else if (a_comb < b_comb) {
-				return true;
-			}
-			else {
-				return a_identifier > b_identifier;
-			}
-		}
+	for (pair<string, string> s : letterLogs) {
+		string log = s.first + " " + s.second;
+		res.push_back(log);
 	}
-	else {
-		if (isalpha(b[j + 1])) return false;
-		else { //both are numbers, a should come first
-			return false;
-		}
+
+	for (string s : digitLogs) {
+		res.push_back(s);
 	}
+	return res;
 }
-
-class Solution {
-public:
-	//["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
-	//["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"] 
-	vector<string> reorderLogFiles(vector<string>& logs) {
-		sort(logs.begin(), logs.end(), customCompare);
-		return logs;
-	}
-};
