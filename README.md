@@ -2,7 +2,7 @@
 
 ******HEAPS:
 
-struct comparator {
+struct maxHeapComparator {
 
 	bool operator()(const int& a, const int &b) {
 		return a < b;
@@ -13,7 +13,7 @@ struct comparator {
 void heaptest() {
 
 	vector<int> v = { 10, 11, 8, 7, 6 };
-	priority_queue<int, vector<int>, comparator> pq;
+	priority_queue<int, vector<int>, maxHeapComparator> pq;
 	for (int x : v) {
 		pq.push(x);
 	}
