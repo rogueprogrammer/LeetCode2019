@@ -3,7 +3,6 @@
 ******HEAPS:
 
 struct comparator {
-	//max heap
 	bool operator()(const int& a, const int &b) {
 		return a < b;
 	}
