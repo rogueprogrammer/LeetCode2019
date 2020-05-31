@@ -14,6 +14,9 @@
 #include <sstream>
 using namespace std;
 
+// https://leetcode.com/problems/critical-connections-in-a-network/
+// passed 8/12 cases, due to using brute force algorithm which fails on large test cases with 1000+ nodes
+
 /*
 Brute force algorithm: First get count for number of critical connections. For each edge, remove it and see if number of connected components 
 has increased. if this is the case, then critical component was found.  O(V*(V+E)) run-time
