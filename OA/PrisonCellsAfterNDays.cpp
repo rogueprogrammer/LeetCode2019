@@ -1,6 +1,5 @@
 //https://leetcode.com/problems/prison-cells-after-n-days/submissions/
-// passed 213/258 cases. fails for case - [0,1,1,1,0,0,0,0], 99
-// expected = [0,0,1,0,0,1,1,0]. output = [0,0,0,0,1,1,1,0]
+
 /*
     [0,1,0,1,1,0,0,1]
     [0,1,1,0,0,0,0,0]
@@ -48,24 +47,29 @@ vector<int> nextDay(vector<int> cells) {
     return temp;
 }
 
-
-vector<int> prisonAfterNDays(vector<int>& cells, int N) {
-    unordered_set<string> ht;
-    for (int i = 0; i < N; ++i) {
+vector<int> prisonAfterNDays(vector<int> cells, int N) {
+    bool hasCycle = false;
+    int numCycles = 0;
+    set<string> ht;
+    for (int i = 0; i < N; i++) {
         vector<int> next = nextDay(cells);
         string s = cellToString(next);
         auto it = ht.find(s);
-        if (it != ht.end()) { //cycle
-            N = N % ht.size();
-            for (int j = 0; j < N; ++j) {
-                cells = nextDay(cells);
-            }
-            return cells;
+        if (it != ht.end()) {
+            hasCycle = true;
+            break;
         }
-        else {
-            ht.insert(cellToString(cells));
-            cells = next;
-        }  
+        else { 
+            ht.insert(s);
+            numCycles++;
+        }
+        cells = next;
+    }
+    if (hasCycle) {
+        N = N % numCycles;
+        for (int i = 0; i < N; i++) {
+            cells = nextDay(cells);
+        }
     }
     return cells;
 }
