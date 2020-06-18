@@ -2,6 +2,17 @@
 //   a node can be (word, numTimes)
 //   create a min heap of size k
 // O(nlogk) algorithm
+/*
+["i", "love", "leetcode", "i", "love", "coding"], k = 2
+Output: ["i", "love"]
+heap: i, love
+	a node can be (word, numTimes)
+	create a min heap of size k
+	for each curWord in words:
+		num_occurences = hashtable lookup of num_occurences
+
+		look at top of heap. If num_occurences(curWord) > topHeap, pop the top elem and replace with curWord
+*/
 struct minHeapComparator {
 	bool operator()(const pair<string, int>& a, const pair<string, int>& b) {
 		//if the words have same frequency, then sort the words with the one that comes lexographically first
