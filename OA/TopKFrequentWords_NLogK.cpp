@@ -41,3 +41,9 @@ vector<string> topKFrequent(vector<string>& words, int k) {
 
 	return res;
 }
+
+void main() {
+	vector<string> words = { "i", "love", "leetcode", "i", "love", "coding" };
+	topKFrequent(words, 2);
+	system("PAUSE");
+}
