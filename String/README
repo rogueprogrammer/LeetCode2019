@@ -7,3 +7,4 @@ Find character in string:
 
 String to INT - stoi
 
+Int to String - to_string
