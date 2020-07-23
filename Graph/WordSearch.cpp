@@ -62,8 +62,7 @@ bool exist(vector<vector<char>>& board, string word) {
         for (int j = 0; j < numCols; ++j) {
             if (board[i][j] == word[0]) {
                 bool found = false;
-                vector<vector<char>> tempBoard = board;
-                dfs(tempBoard, word, i, j, 1, found);
+                dfs(board, word, i, j, 1, found);
                 if (found == true) return true;
             }
         }
