@@ -54,6 +54,13 @@ using namespace std;
        If cell is dead (0) and has 3 neighbors that are 1 or -1, -> set to 2
        else if cell is -1 or 2, it was already visited.
     2. Convert cells with value 2 -> 1, and cells with value -1 -> 0
+    
+    Follow-up question: What if board is infinite.
+    If board is infinite, then the entire board won't fit in memory.
+    We should read 3 rows at a time, current row, row above and below row. Only need alive states. 
+    
+    
+    
     */
 
 
