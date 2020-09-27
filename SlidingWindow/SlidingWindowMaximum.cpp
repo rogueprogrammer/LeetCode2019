@@ -2,7 +2,8 @@ class Solution {
 public:
         /*  https://leetcode.com/problems/sliding-window-maximum/submissions/
        O(n) solution had to refer to the solution from here - https://www.youtube.com/watch?v=Szyj6BY9iSA
-        - Invariant: DQ is in decreasing order. Anytime incoming element is more than the back, we don't care about the back element and keep popping it off. Anytime incoming element is more than the front, we pop off the front. 
+        - Invariant: DQ is in decreasing order. Anytime incoming element is more than the back, we don't care about the back element and keep popping it off. 
+        Anytime incoming element is more than the front, we pop off the front. 
         
         - Why DQ? -> Need to push/pop elements to both front and back to maintain ordering
         - Why do we maintain DQ of indices instead of DQ of the array elements?
