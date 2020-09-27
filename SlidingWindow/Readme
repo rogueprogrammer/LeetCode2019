@@ -2,3 +2,5 @@ Problems such as finding longest substring or shortest substring with some contr
 
 https://leetcode.com/discuss/general-discussion/657507/sliding-window-for-beginners-problems-template-sample-solutions
 https://leetcode.com/tag/sliding-window/
+
+Elements in the sliding window are usually maintained in some data structure like set, deque, etc.
