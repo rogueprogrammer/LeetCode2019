@@ -1,7 +1,9 @@
 class Solution {
 public:
         /*  https://leetcode.com/problems/sliding-window-maximum/submissions/
-       O(n) solution had to refer to the solution from here - https://www.youtube.com/watch?v=Szyj6BY9iSA
+       O(n) solution had to refer to the solution from here - https://www.youtube.com/watch?v=Szyj6BY9iSA It helps visualizing number as sticks to see what should be
+       pushed and popped off the DQ. The idea is to maintain a DQ for the sliding window, where DQ is in decreasing order, front element should be pushed into resulting
+       vector. 
         - Invariant: DQ is in decreasing order. Anytime incoming element is more than the back, we don't care about the back element and keep popping it off. 
         Anytime incoming element is more than the front, we pop off the front. 
         
