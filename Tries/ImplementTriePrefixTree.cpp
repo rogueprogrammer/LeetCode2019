@@ -6,8 +6,7 @@ struct TrieNode {
     TrieNode(char curChar) {
         cur = curChar;
         isEnd = false;
-        vector<TrieNode*> _children(26);
-        children = _children;
+        children.resize(26);
     }
 };
 
