@@ -1,0 +1,8 @@
+note that: 
+  cv.wait(lk, [this]{return count == 3;});
+
+is equivalent to 
+
+while(count != 3){ 
+  cv.wait(lk); 
+}
