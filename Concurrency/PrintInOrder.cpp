@@ -9,12 +9,14 @@ public:
     Foo() {
         count = 3;    
     }
-
+    // note that         cv.wait(lk, [this]{return count == 3;});
+    // is equivalent to while(count != 3){ cv.wait(lk); }
 
     void first(function<void()> printFirst) {
         
         unique_lock<mutex> lk(m);
         cv.wait(lk, [this]{return count == 3;});
+        
         count = 2;
         // printFirst() outputs "first". Do not change or remove this line.
         printFirst();
