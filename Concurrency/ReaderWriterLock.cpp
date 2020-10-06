@@ -1,63 +1,102 @@
-//
+#include "Header.h"
+#include <condition_variable>
+#include <thread>         
+#include <mutex>          
+
+
 // https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
 // https://stackoverflow.com/questions/12033188/how-would-you-implement-your-own-reader-writer-lock-in-c11
 // https://stackoverflow.com/questions/27860685/how-to-make-a-multiple-read-single-write-lock-from-more-basic-synchronization-pr
 
 
-// are 2 condition variables needed, one for reader and one for writer? or one is fine?
 // will there be starvation for reader or writer here?
 
 class ReaderWriterLock {
 
 private:
     mutex m;
-    condition_variable cv;
-    int numWritersWaiting;
+    condition_variable writerCV;
+    condition_variable readerCV;
+    bool isWriterActive;
     int numReadersActive;
-    bool writerCurrentlyWriting;
+    int numWritersWaiting;
+    /*
+    
+        File
+
+        r, r, r       w
+        WRITER THREAD
+        if readers active -> Writer thread waits
+        if writers active -> Writer thread waits
+        If no readers or writers active -> Writer thread acquires lock
+
+        READER THREAD
+        if 0 or more readers active -> Reader can acquire lock
+        if writer active -> reader waits
+
+        We need two condition variables so we know which group of threads to wake up, reader or writer
+        do we even need to know numReadersActive? is the variable necessary?
+    
+    
+    */
+
+
 
 public:
 
     ReaderWriterLock() {
-        numWritersWaiting = 0;
         numReadersActive = 0;
-        writerCurrentlyWriting = false;
+        numWritersWaiting = 0;
+        isWriterActive = false;
     }
 
     void readLock() {
         unique_lock<mutex> lk(m);
-        cv.wait(lk, [this] { return numWritersWaiting == 0 && writerCurrentlyWriting; }); // take this lock if writers aren't after it and writer isn't writing
+        while (isWriterActive || numWritersWaiting > 0) {
+            readerCV.wait(lk);
+        }
         ++numReadersActive;
         lk.unlock();
     }
 
     void readUnlock() {
-
         unique_lock<mutex> lk(m);
         --numReadersActive;
+        writerCV.notify_one();
         lk.unlock();
-        cv.notify_one();
     }
 
     void writeLock() {
         unique_lock<mutex> lk(m);
         ++numWritersWaiting;
-        while (numReadersActive > 0 && writerCurrentlyWriting) {
-            cv.wait(lk);
+        while (isWriterActive || numReadersActive > 0) {
+            writerCV.wait(lk);
         }
-        writerCurrentlyWriting = true;
+        isWriterActive = true;
+        --numWritersWaiting;
         lk.unlock();
     }
 
     void writeUnlock() {
         unique_lock<mutex> lk(m);
-        --numWritersWaiting;
-        writerCurrentlyWriting = false;
-        if (numWritersWaiting > 1) {
-            cv.notify_all();
+        isWriterActive = false;
+        if (numWritersWaiting > 0) {
+            writerCV.notify_one();
         }
-
+        else {
+            readerCV.notify_all();
+        }
         lk.unlock();
     }
 
 };
+
+
+
+
+
+void main() {
+    
+
+    system("PAUSE");
+}
