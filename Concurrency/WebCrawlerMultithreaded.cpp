@@ -1,67 +1,69 @@
-//https://leetcode.com/problems/web-crawler-multithreaded/
-
-/**
- * // This is the HtmlParser's API interface.
- * // You should not implement it, or speculate about its implementation
- * class HtmlParser {
- *   public:
- *     vector<string> getUrls(string url);
- * };
- */
 class Solution {
-private:
-    unordered_set<string> visited;
-    queue<string> q;
+    public:
     string hostname;
-    HtmlParser *html_Parser;
-    mutex mtx;
+    queue<string> q;
+    set<string> visitedUrls;
+    int working = 0; // number of working threads
+    bool done;
+    mutex m;
+    condition_variable cv;
     
-    //extract
-    string getHostname(string url)
-    {
-        int idx = url.find('/', 7); //start find after 7th index (i.e, after "http//:")
-        return (idx != -1 ? url.substr(0, idx) : url);
+    string getHostName(string url){
+        // http://leetcode.com/problems
+        return url.substr(0, url.find("/", 7));
     }
- 
-public:    
-    void crawlUtil()
-    {
-        vector<thread*> threadPool;
-        
-        while (!q.empty())
-        {
-            string curr_url = q.front();
-            q.pop();
-            
-            
-            for (string neighbor : html_Parser->getUrls(curr_url))
-            {
-                unique_lock<mutex> u_lock(mtx);
-                if (getHostname(neighbor) == hostname && !visited.count(neighbor))
-                {
-                    q.push(neighbor);
-                    visited.insert(neighbor);
-                }
-                u_lock.unlock();
-            }
-            threadPool.push_back(new thread(&Solution::crawlUtil, this));     
-        }
-        
-        for(auto t : threadPool)
-            t->join(); 
-    }      
     
-    //BFS
+    
+    void startWorker(HtmlParser* parser){
+        while(true){
+            unique_lock<mutex> lk(m);
+            while(q.empty() && !done){
+                cv.wait(lk);
+            }
+            
+            if(done){
+                return;
+            }
+            ++working;
+            string url = q.front();
+            q.pop();
+            lk.unlock();
+            
+            vector<string> urls = parser->getUrls(url);
+            
+            lk.lock();
+            for(string curUrl : urls){
+                auto it = visitedUrls.find(curUrl);
+                if(it == visitedUrls.end() && getHostName(curUrl) == hostname){
+                    q.push(curUrl);
+                    visitedUrls.insert(curUrl);
+                }
+            }
+            --working;
+            if(q.empty() && working == 0){
+                done = true;
+            }
+            cv.notify_all();            
+        }
+    }
+    
     vector<string> crawl(string startUrl, HtmlParser htmlParser) {
-        hostname = getHostname(startUrl);        
-        html_Parser = &htmlParser;
+        done = false;
+        hostname = getHostName(startUrl);
+        int threadNum = thread::hardware_concurrency();
+        vector<thread> workers;
         
+        visitedUrls.insert(startUrl);
         q.push(startUrl);
-        visited.insert(startUrl);
         
-        std::thread mainThread(&Solution::crawlUtil, this);
-        mainThread.join();
-		
-        return vector<string>(visited.begin(), visited.end());
+        for(int i = 0; i < threadNum; ++i){
+            workers.push_back(std::thread(&Solution::startWorker, this, &htmlParser));
+        }
+        for(auto &it : workers){
+            it.join();
+        }
+        return vector<string>(visitedUrls.begin(), visitedUrls.end());
+        
+        
     }  
 };
