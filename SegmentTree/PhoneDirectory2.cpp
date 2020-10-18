@@ -8,6 +8,7 @@ class PhoneDirectory {
 public:
     bitset<20000> bits; //let bits[i] = 1 if available 0 if allocated
     int maxVal;
+    int boundary;
     
 
     /** Initialize your data structure here
@@ -15,6 +16,7 @@ public:
     PhoneDirectory(int maxNumbers) {
         bits.set(); //set all bits to 1, as they are all available
         maxVal = maxNumbers;
+        boundary = maxVal + maxVal - 1;
     }
 
     int get() {
@@ -22,12 +24,15 @@ public:
         while (index < maxVal) {
             int leftChild = index * 2 + 1;
             int rightChild = index * 2 + 2;
+            if (leftChild >= boundary) {
+                break;
+            }
 
             if (bits[leftChild] == 1) {
-                index = index * 2 + 1;
+                index = leftChild;
             }
             else if (bits[index * 2 + 2] == 1) {
-                index = index * 2 + 2;
+                index = rightChild;
             }
             else {
                 return -1;
