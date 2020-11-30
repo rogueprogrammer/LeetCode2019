@@ -15,6 +15,9 @@ public:
         maxVal = maxNumbers;
         boundary = maxVal + maxVal - 1;
         // calculate offset
+        // important note: if inputted numbers is not a power of 2, then you need to make it a power of 2 by incrementing the log2 base. example, 
+        // if you have 7 nodes then log2(7) = 2. add one and you will get 3. thus you should have 2^3 = 8 leaves. this will make the tree to be complete, which is necessary
+        // for the get() function to work.
         if (!powerOf2(maxVal)) {
             int next = log2(maxVal) + 1;
             numLeaves = pow(2, next);
