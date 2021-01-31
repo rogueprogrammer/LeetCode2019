@@ -2,17 +2,13 @@
 // close to working solution, need to debug (maybe 1-2 lines need changing). algo is correct
 string minWindow(string s, string t) {
     /*
-
                 i         j
     Input: s = "D A O B E C O D E B A  N  C", t = "ABC"
                 0 1 2 3 4 5 6 7 8 9 10 11 12
     Output: "BANC"
-
-
    A - 1
    B - 1
    C - 1
-
     */
     map<char, int> hm;
     for (char c : t) {
@@ -52,6 +48,5 @@ string minWindow(string s, string t) {
         }
 
     }
-    res.substr(minStart, minEnd - minStart);
-    return res;
+    return s.substr(minStart, minEnd - minStart);
 }
